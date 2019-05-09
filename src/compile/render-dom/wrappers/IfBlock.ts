@@ -319,9 +319,9 @@ export default class IfBlockWrapper extends Wrapper {
 		const destroy_old_block = deindent`
 			@group_outros();
 			@on_outro(() => {
-				if (${if_blocks}[${previous_block_index}] === null) {
-					return;
-				}
+				//if (${if_blocks}[${previous_block_index}] === null) {
+				//	return;
+				//}
 				${if_blocks}[${previous_block_index}].d(1);
 				${if_blocks}[${previous_block_index}] = null;
 			});
@@ -431,17 +431,23 @@ export default class IfBlockWrapper extends Wrapper {
 		// as that will typically result in glitching
 		const exit = branch.block.has_outro_method
 			? deindent`
-				@group_outros();
-				@on_outro(() => {
-					if (${name} === null) {
-						return;
-					}
-					${name}.d(1);
-					${name} = null;
-				});
+				//if (@already_grouping()) {
+				//	${name}.d(1);
+				//	${name} = null;
+				///} else {
+					console.log('kek', ctx);
+					@group_outros();
+					@on_outro(() => {
+						//if (${name} === null) {
+						//	return;
+						//}
+						${name}.d(1);
+						${name} = null;
+					});
 
-				${name}.o(1);
-				@check_outros();
+					${name}.o(1);
+					@check_outros();
+				//}
 			`
 			: deindent`
 				${name}.d(1);

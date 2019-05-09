@@ -23,7 +23,16 @@ function dispatch(node, direction, kind) {
 
 let outros;
 
+let n = 0;
 export function group_outros() {
+	n++;
+	console.log('group_outros', n);
+
+	if (n > 1) {
+		console.log('already grouping');
+		return;
+	}
+
 	outros = {
 		remaining: 0,
 		callbacks: []
@@ -31,12 +40,23 @@ export function group_outros() {
 }
 
 export function check_outros() {
+	console.log('check_outros', n);
+
+	n--;
+
+	if (n !== 0) {
+		console.log('skip check_outros');
+		return;
+	}
+
 	if (!outros.remaining) {
+		console.log('run all');
 		run_all(outros.callbacks);
 	}
 }
 
 export function on_outro(callback) {
+	console.log('on outro');
 	outros.callbacks.push(callback);
 }
 

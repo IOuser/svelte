@@ -11,6 +11,8 @@
 			<Nested {item} />
 			{#if item.id === activeId && item.children}
 				<svelte:self list={item.children} />
+			{:else}
+
 			{/if}
 		</li>
 	{/each}
